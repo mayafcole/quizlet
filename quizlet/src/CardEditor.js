@@ -1,49 +1,53 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-const CardEditor = (props) => {
+function CardEditor(props) {
+  const [front, setFront] = useState('');
+  const [back, setBack] = useState('');
 
-    const [front,setFront] = useState('')
-    const [back, setBack] = useState('')
-    const cardList = props.cards.map((card, index) => {
-        return (
-         <tr>
-            <td>{card.front}</td>
-            <td>{card.back}</td>
-            <td><button onClick={() => props.deleteCard(index)}> delete card</button></td>
+  const addCard = (card) => {
+    props.addCard(card);
+    setFront('');
+    setBack('');
+  };
 
-        </tr>
-        )
-    })
+  const deleteCard = (index) => {
+    props.deleteCard(index);
+  };
 
-    const addAndClear = (card) => {
-        props.addCard(card)
-        setFront('')
-        setBack('')
-    }
-
+  const cards = props.cards.map((card, index) => {
     return (
+      <tr key={card.id}>
+        <td>{card.front}</td>
+        <td>{card.back}</td>
+        <td><button type="button" onClick={() => deleteCard(index)}>delete card</button></td>
+      </tr>
+    );
+  });
+
+  return (
     <div>
-        <h2> Card Editor</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th> Front</th>
-                    <th> Back</th>
-                    <th> Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {cardList}
-            </tbody>
-        </table>
-        <br/>
-        <input placeholder='front of card' value={front} onChange={(e) => setFront(e.target.value)}/>
-        <input placeholder='back of card'value={back} onChange={(e) => setBack(e.target.value)}/>
-        <button onClick= {() => addAndClear({front, back})}> add card </button>
-
-
+      <h2>Card Editor</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Front</th>
+            <th>Back</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cards}
+        </tbody>
+      </table>
+      <br />
+      <input placeholder="front of card" value={front} onChange={(e) => setFront(e.target.value)} />
+      <input placeholder="back of card" value={back} onChange={(e) => setBack(e.target.value)} />
+      <button type="button" onClick={() => addCard({ front, back })}>add card</button>
+      <hr />
+      <button type="button" onClick={() => props.switchMode()}>switch to card viewer</button>
     </div>
-    )
+
+  );
 }
 
 export default CardEditor;

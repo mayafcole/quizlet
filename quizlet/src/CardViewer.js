@@ -1,54 +1,24 @@
-// import React, {useState} from 'react';
-// useState = keeps track of index
-// card array
+import React, { useState } from 'react';
 
-// const CardViewer = (props) => {
+function CardViewer(props) {
+  const [index, setIndex] = useState(0);
+  console.log(props.cards[index].front);
+  console.log(props.cards[index].back);
+  const [front, setFront] = useState(true);
 
-//     const [front,setFront] = useState('')
-//     const [back, setBack] = useState('')
-//     const cardList = props.cards.map((card, index) => {
-//         return (
-//          <tr>
-//             <td>{card.front}</td>
-//             <td>{card.back}</td>
-//             <td><button onClick={() => props.deleteCard(index)}> delete card</button></td>
+  return (
+    <div>
+      <h2>card viewer</h2>
 
-//         </tr>
-//         )
-//     })
+      <h3> progress bar</h3>
+      <h3> card {index + 1}/ {props.cards.length} </h3>
+      {front ? <h2>{props.cards[index].front}</h2> : <h2>{props.cards[index].back}</h2>}
+      <button type="button" onClick={() => setFront(!front)}>flip card</button>
+      <button type="button" disabled={index === 0} onClick={() => setIndex(index - 1)}>previous card</button>
+      <button type="button" disabled={index + 2 > props.cards.length} onClick={() => setIndex(index + 1)}>next card</button>
 
-//     const goBack = (cardList) => {
-//         // get index of current card
-//         // subtract 1
-//         // get new card
-//         // const newCards = cards.slice();
-//         // newCards.splice(index, 1);
-//         props.cardList.find(index - 1);
+    </div>
 
-//         }
-
-//     return (
-//     <div>
-//         <h2> Card Viewer</h2>
-//         <table>
-//             <thead>
-//                 <tr>
-//                     <th> Next Card</th>
-//                     <th> Previous Card</th>
-//                 </tr>
-//             </thead>
-//             <tbody>
-//                 {cardList}
-//             </tbody>
-//         </table>
-//         <br/>
-//         <button onClick= {() => goBack ({index})}> Next Card </button>
-//         <button onClick= {() => ({front, back})}> Previoius Card </button>
-
-
-
-//     </div>
-//     )
-// }
-
-// export default CardViewer;
+  );
+}
+export default CardViewer;
